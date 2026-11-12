@@ -8,6 +8,9 @@
   const logoutBtn = document.getElementById('logout-btn');
   const workspace = document.getElementById('admin-workspace');
 
+  const techPromptText = document.getElementById('tech-prompt-text');
+  const copyTechPromptBtn = document.getElementById('copy-tech-prompt-btn');
+
   const photoInput = document.getElementById('photo-input');
   const uploadZone = document.getElementById('upload-zone');
   const autoOptimizeCheck = document.getElementById('auto-optimize-check');
@@ -35,6 +38,27 @@
   let activePin = sessionStorage.getItem(PIN_KEY) || '';
   let selectedOriginalFile = null;
   let selectedDims = { width: 0, height: 0 };
+
+  if (copyTechPromptBtn && techPromptText) {
+    copyTechPromptBtn.addEventListener('click', async () => {
+      const text = techPromptText.textContent.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const range = document.createRange();
+        range.selectNodeContents(techPromptText);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        document.execCommand('copy');
+      }
+      const prev = copyTechPromptBtn.textContent;
+      copyTechPromptBtn.textContent = '✅ Copiado';
+      setTimeout(() => {
+        copyTechPromptBtn.textContent = prev;
+      }, 1800);
+    });
+  }
 
   function showStatus(el, msg, isError = false) {
     el.textContent = msg;

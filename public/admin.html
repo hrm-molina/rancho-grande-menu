@@ -164,6 +164,28 @@
       border-color: var(--gold);
     }
 
+    .mini-prompt-card {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(16, 7, 2, 0.72);
+      border: 1px solid rgba(255, 204, 29, 0.28);
+    }
+
+    .mini-prompt-text {
+      flex: 1;
+      min-width: 220px;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: #ffe8ba;
+      user-select: all;
+    }
+
     /* Dropzone */
     .upload-zone {
       position: relative;
@@ -380,6 +402,13 @@
         <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 14px;">
           Cada día puedes subir una foto nueva. Reemplaza automáticamente la anterior para todos los clientes que escaneen el QR.
         </p>
+
+        <div class="mini-prompt-card">
+          <div id="tech-prompt-text" class="mini-prompt-text">Crea una foto vertical con estas características técnicas: 1080 × 1920 px (formato 9:16), 2.1 megapíxeles (mínimo 800 × 1000 px / 0.8 MP y máximo 2160 × 3840 px / 8.3 MP), formato JPG, PNG o WEBP, peso máximo 4 MB.</div>
+          <button id="copy-tech-prompt-btn" class="btn btn-secondary" style="padding: 7px 13px; font-size: 0.82rem; white-space: nowrap;" type="button">
+            📋 Copiar prompt
+          </button>
+        </div>
 
         <form id="menu-upload-form">
           <div id="upload-zone" class="upload-zone">
