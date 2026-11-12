@@ -73,12 +73,18 @@
     return res.json();
   }
 
+  const PUBLIC_SITE_URL = 'https://rancho-grande-menu-f4n6.vercel.app';
+
   function enterAdmin(cfg) {
     loginCard.classList.add('hidden');
     workspace.classList.remove('hidden');
     logoutBtn.classList.remove('hidden');
     populateConfig(cfg);
-    refreshQr(window.location.origin + '/');
+    const defaultQrUrl =
+      window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? PUBLIC_SITE_URL
+        : window.location.origin;
+    refreshQr(defaultQrUrl);
   }
 
   loginForm.addEventListener('submit', async (e) => {
@@ -234,7 +240,7 @@
 
   // QR Controls
   function refreshQr(url) {
-    const cleanUrl = (url || qrUrlInput.value || window.location.origin + '/').trim();
+    const cleanUrl = (url || qrUrlInput.value || PUBLIC_SITE_URL).trim();
     qrUrlInput.value = cleanUrl;
     const encoded = encodeURIComponent(cleanUrl);
     qrPreviewImg.src = `/api/qr?url=${encoded}&t=${Date.now()}`;

@@ -264,9 +264,12 @@ app.post('/api/settings', requireAdmin, async (req, res) => {
 
 app.get('/api/qr', async (req, res) => {
   try {
-    const host = req.headers['x-forwarded-host'] || req.get('host');
+    const host = req.headers['x-forwarded-host'] || req.get('host') || '';
     const proto = req.headers['x-forwarded-proto'] || req.protocol;
-    const defaultUrl = `${proto}://${host}/`;
+    const isLocal = /^localhost(?::|$)|^127\.0\.0\.1(?::|$)/i.test(host);
+    const defaultUrl =
+      process.env.PUBLIC_URL ||
+      (isLocal || !host ? 'https://rancho-grande-menu-f4n6.vercel.app' : `${proto}://${host}`);
     const targetUrl = (req.query.url || defaultUrl).toString().trim();
     const format = req.query.format === 'svg' ? 'svg' : 'png';
 
