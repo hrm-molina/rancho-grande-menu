@@ -32,7 +32,7 @@
   let introFinished = false;
   let audioCtx = null;
   let soundEnabled = false;
-  let customVideoUrl = '/assets/rancho-bull-intro.mp4';
+  let customVideoUrl = '/assets/rancho-bull-intro.mp4?v=2';
 
   function formatUpdatedLabel(menuMeta, hasCustomMenu) {
     if (!hasCustomMenu || !menuMeta || !menuMeta.updatedAt) {
@@ -60,7 +60,11 @@
 
     menuPhoto.src = cfg.menuImage || '/assets/sample-menu.jpg';
     menuUpdatedLabel.textContent = formatUpdatedLabel(cfg.menuMeta, cfg.hasCustomMenu);
-    customVideoUrl = cfg.introVideo || '/assets/rancho-bull-intro.mp4';
+    const rawIntroVideo = cfg.introVideo || '/assets/rancho-bull-intro.mp4?v=2';
+    customVideoUrl =
+      rawIntroVideo === '/assets/rancho-bull-intro.mp4'
+        ? '/assets/rancho-bull-intro.mp4?v=2'
+        : rawIntroVideo;
   }
 
   // Subtle synthesized hoof-thump sound (only after user taps "Activar sonido")
