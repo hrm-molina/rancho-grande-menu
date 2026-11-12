@@ -10,7 +10,7 @@ npm start
 ```
 
 - **Página del cliente (al escanear el QR):** `http://localhost:3000/`
-- **Panel de administración diario:** `http://localhost:3000/admin` *(PIN inicial: `1234`, configurable con `ADMIN_PIN` o desde el panel)*
+- **Panel de administración diario:** `http://localhost:3000/admin` *(PIN por defecto: `1975`, configurable con `ADMIN_PIN` o desde el panel)*
 
 ## Publicar en Vercel (desde GitHub)
 

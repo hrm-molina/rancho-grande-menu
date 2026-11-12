@@ -38,7 +38,7 @@ const DEFAULT_CONFIG = {
     originalName: 'sample-menu.jpg'
   },
   introVideo: '/assets/rancho-bull-intro.mp4?v=2',
-  adminPin: process.env.ADMIN_PIN || '1234'
+  adminPin: process.env.ADMIN_PIN || '1975'
 };
 
 async function readConfig() {
