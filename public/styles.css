@@ -1,0 +1,525 @@
+:root {
+  --cream: #fff7e6;
+  --gold: #ffcc4d;
+  --gold-soft: #f3c874;
+  --amber: #e68a1e;
+  --ink-brown: #1e0c03;
+  --shadow-heavy: 0 24px 60px rgba(10, 4, 1, 0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+  background-color: #160902;
+  color: var(--cream);
+  overflow-x: hidden;
+}
+
+/* =========================================================
+   STAGE 1: CHARGING BULL INTRO OVERLAY
+   ========================================================= */
+.bull-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: radial-gradient(circle at center, #3b1c08 0%, #0e0602 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+.bull-intro.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.bull-canvas,
+.bull-custom-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bull-canvas.hidden,
+.bull-custom-video.hidden {
+  display: none;
+}
+
+.bull-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    transparent 36%,
+    rgba(24, 9, 2, 0.56) 76%,
+    rgba(10, 3, 0, 0.94) 100%
+  );
+}
+
+.bull-flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 224, 150, 0.96), rgba(255, 162, 45, 0.72));
+  opacity: 0;
+  transition: opacity 0.35s ease-out;
+}
+
+.bull-flash.active {
+  opacity: 1;
+}
+
+.bull-top-badge {
+  position: absolute;
+  top: max(18px, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: rgba(30, 13, 4, 0.76);
+  border: 1px solid rgba(255, 204, 77, 0.48);
+  color: var(--gold);
+  font-family: 'Rye', serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+  white-space: nowrap;
+}
+
+.skip-intro-btn {
+  position: absolute;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  right: 20px;
+  z-index: 5;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 246, 220, 0.5);
+  background: rgba(28, 12, 4, 0.78);
+  color: var(--cream);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.skip-intro-btn:hover {
+  background: rgba(90, 42, 12, 0.92);
+  transform: scale(1.04);
+}
+
+.sound-hint-btn {
+  position: absolute;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  left: 20px;
+  z-index: 5;
+  padding: 10px 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 204, 77, 0.42);
+  background: rgba(28, 12, 4, 0.75);
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+/* =========================================================
+   ORGANIC RANCH SUNSET BACKGROUND & PARRILLA EMBERS
+   ========================================================= */
+.ranch-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255, 196, 102, 0.14) 0%, transparent 48%),
+    linear-gradient(
+      180deg,
+      rgba(22, 10, 3, 0.42) 0%,
+      rgba(24, 10, 3, 0.58) 42%,
+      rgba(16, 6, 1, 0.88) 100%
+    ),
+    url('/assets/ranch-bg.jpg') center top / cover no-repeat fixed;
+  padding: 28px 14px 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .ranch-page {
+    background:
+      radial-gradient(circle at 50% 16%, rgba(255, 196, 102, 0.14) 0%, transparent 48%),
+      linear-gradient(
+        180deg,
+        rgba(22, 10, 3, 0.36) 0%,
+        rgba(24, 10, 3, 0.54) 42%,
+        rgba(16, 6, 1, 0.88) 100%
+      ),
+      url('/assets/ranch-bg-wide.jpg') center top / cover no-repeat fixed;
+  }
+}
+
+.grill-glow-bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 36vh;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    ellipse 85% 70% at 50% 108%,
+    rgba(255, 95, 12, 0.42) 0%,
+    rgba(255, 148, 28, 0.2) 42%,
+    transparent 78%
+  );
+  animation: grillPulse 3.6s ease-in-out infinite alternate;
+}
+
+@keyframes grillPulse {
+  0% { opacity: 0.72; transform: scaleY(0.96); }
+  100% { opacity: 1; transform: scaleY(1.05); }
+}
+
+.embers-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ranch-page.is-waiting {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.ranch-page.is-revealed {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* =========================================================
+   STAGE 2: ORGANIC HERO HEADER
+   ========================================================= */
+.welcome-header {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4px 8px 6px;
+}
+
+.bull-medallion {
+  width: clamp(92px, 22vw, 118px);
+  height: clamp(92px, 22vw, 118px);
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 14px;
+  border: 2.5px solid rgba(255, 208, 112, 0.72);
+  box-shadow:
+    0 0 0 5px rgba(32, 14, 4, 0.55),
+    0 14px 32px rgba(0, 0, 0, 0.65),
+    0 0 28px rgba(255, 166, 40, 0.32);
+}
+
+.bull-medallion img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 16%;
+}
+
+.welcome-kicker {
+  font-size: clamp(0.84rem, 2.8vw, 0.98rem);
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 225, 162, 0.92);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+  margin-bottom: 6px;
+}
+
+.hero-title-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.hero-title {
+  font-family: 'Rye', Georgia, serif;
+  font-size: clamp(2.2rem, 8.6vw, 3.8rem);
+  line-height: 1.06;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #fffdf6 18%, #ffe194 62%, #f4ac28 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 0 rgba(36, 14, 3, 0.92)) drop-shadow(0 10px 24px rgba(0, 0, 0, 0.72));
+}
+
+.hero-title-wrap.has-fire .hero-title {
+  color: transparent;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  filter: none;
+}
+
+.hero-fire-canvas {
+  position: absolute;
+  inset: -12px -14px;
+  width: calc(100% + 28px);
+  height: calc(100% + 24px);
+  pointer-events: none;
+}
+
+.subtitle-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.hairline {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 210, 124, 0.65), transparent);
+}
+
+.hero-subtitle {
+  font-family: 'Kaushan Script', cursive;
+  font-size: clamp(1.12rem, 3.9vw, 1.52rem);
+  color: #ffefd2;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
+}
+
+@media (max-width: 440px) {
+  .hero-subtitle {
+    white-space: normal;
+  }
+}
+
+/* =========================================================
+   STAGE 3: DAILY MENU PHOTO SECTION
+   ========================================================= */
+.menu-stage {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 640px;
+  margin-top: 22px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.menu-stage.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menu-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+  padding: 0 6px;
+}
+
+.heading-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 204, 112, 0.48), transparent);
+}
+
+.heading-label {
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+}
+
+.menu-frame {
+  position: relative;
+  padding: 10px;
+  border-radius: 22px;
+  background: rgba(24, 10, 3, 0.58);
+  border: 1px solid rgba(255, 206, 120, 0.28);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 232, 185, 0.16),
+    var(--shadow-heavy);
+}
+
+.menu-photo-btn {
+  display: block;
+  width: 100%;
+  border: none;
+  padding: 0;
+  background: #140802;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: zoom-in;
+  position: relative;
+}
+
+.menu-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #140802;
+}
+
+.zoom-pill {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(20, 9, 3, 0.78);
+  border: 1px solid rgba(255, 204, 112, 0.45);
+  color: var(--cream);
+  font-size: 0.8rem;
+  font-weight: 700;
+  backdrop-filter: blur(6px);
+}
+
+.menu-actions-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 0 4px;
+  font-size: 0.83rem;
+}
+
+.updated-chip {
+  padding: 6px 13px;
+  border-radius: 999px;
+  background: rgba(24, 10, 3, 0.65);
+  border: 1px solid rgba(255, 206, 120, 0.24);
+  color: #eed4a9;
+  backdrop-filter: blur(6px);
+}
+
+.replay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 204, 112, 0.42);
+  background: rgba(38, 16, 5, 0.72);
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 0.83rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.replay-btn:hover {
+  background: rgba(74, 32, 10, 0.88);
+  transform: translateY(-1px);
+}
+
+.page-footer {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: rgba(255, 232, 195, 0.68);
+  z-index: 3;
+}
+
+.page-footer a {
+  color: #ffd98a;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(255, 217, 138, 0.5);
+  padding-bottom: 1px;
+}
+
+/* =========================================================
+   LIGHTBOX MODAL FOR FULLSCREEN ZOOM
+   ========================================================= */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(8, 3, 1, 0.94);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.lightbox.hidden {
+  display: none;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top));
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 204, 77, 0.6);
+  background: rgba(45, 19, 6, 0.9);
+  color: var(--cream);
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lightbox-img-wrap {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: pinch-zoom pan-x pan-y;
+}
+
+.lightbox-img-wrap img {
+  max-width: 100%;
+  max-height: 92vh;
+  border-radius: 10px;
+  object-fit: contain;
+}

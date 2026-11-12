@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Rancho Grande — Comida Casera con Sabor de Campo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Nunito:wght@500;700;800&family=Rye&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- STAGE 1: CHARGING BULL INTRO -->
+  <section id="bull-intro" class="bull-intro" aria-label="Intro Rancho Grande">
+    <canvas id="bull-canvas" class="bull-canvas"></canvas>
+    <video
+      id="bull-custom-video"
+      class="bull-custom-video hidden"
+      playsinline
+      muted
+      autoplay
+      preload="auto"
+    ></video>
+    <div class="bull-vignette"></div>
+    <div id="bull-flash" class="bull-flash"></div>
+
+    <div class="bull-top-badge">Rancho Grande</div>
+    <button id="sound-hint-btn" class="sound-hint-btn" type="button">🔊 Activar sonido</button>
+    <button id="skip-intro-btn" class="skip-intro-btn" type="button">Saltar intro →</button>
+  </section>
+
+  <!-- STAGE 2 & 3: ORGANIC RANCH HEADER + DAILY MENU -->
+  <main id="ranch-page" class="ranch-page is-waiting">
+    <!-- Warm parrilla glow & rising sparks canvas -->
+    <div class="grill-glow-bottom" aria-hidden="true"></div>
+    <canvas id="embers-canvas" class="embers-canvas" aria-hidden="true"></canvas>
+
+    <!-- STAGE 2: ORGANIC HERO HEADER -->
+    <header class="welcome-header">
+      <div class="bull-medallion">
+        <img
+          src="/assets/bull-crest.jpg"
+          onerror="this.src='/assets/charging-bull.jpg'"
+          alt="Emblema Rancho Grande"
+        />
+      </div>
+
+      <span id="welcome-kicker" class="welcome-kicker">Bienvenidos a</span>
+      <div id="hero-title-wrap" class="hero-title-wrap">
+        <h1 id="hero-title" class="hero-title">Rancho Grande</h1>
+        <canvas id="hero-fire-canvas" class="hero-fire-canvas" aria-hidden="true"></canvas>
+      </div>
+
+      <div class="subtitle-line">
+        <span class="hairline" aria-hidden="true"></span>
+        <p id="hero-subtitle" class="hero-subtitle">Comida Casera con Sabor de Campo</p>
+        <span class="hairline" aria-hidden="true"></span>
+      </div>
+    </header>
+
+    <!-- STAGE 3: DAILY MENU PHOTO -->
+    <section id="menu-stage" class="menu-stage" aria-label="Menú del día">
+      <div class="menu-section-heading">
+        <span class="heading-rule" aria-hidden="true"></span>
+        <span class="heading-label">Menú de Hoy</span>
+        <span class="heading-rule" aria-hidden="true"></span>
+      </div>
+
+      <div class="menu-frame">
+        <button id="menu-photo-btn" class="menu-photo-btn" type="button" title="Toca para ampliar el menú">
+          <img
+            id="menu-photo"
+            class="menu-photo"
+            src="/assets/sample-menu.jpg"
+            alt="Menú de hoy de Rancho Grande"
+          />
+          <span class="zoom-pill">🔍 Toca para ampliar</span>
+        </button>
+      </div>
+
+      <div class="menu-actions-bar">
+        <span id="menu-updated-label" class="updated-chip">Menú del día listo</span>
+        <button id="replay-intro-btn" class="replay-btn" type="button">🐂 Repetir intro</button>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <p>Rancho Grande • Comida Casera con Sabor de Campo &nbsp;|&nbsp; <a href="/admin">Administrar menú</a></p>
+    </footer>
+  </main>
+
+  <!-- FULLSCREEN LIGHTBOX -->
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Menú ampliado">
+    <button id="lightbox-close" class="lightbox-close" type="button" aria-label="Cerrar">✕</button>
+    <div class="lightbox-img-wrap">
+      <img id="lightbox-img" src="" alt="Menú de hoy ampliado" />
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
